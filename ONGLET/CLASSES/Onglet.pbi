@@ -46,7 +46,7 @@ EndProcedure
 
 Procedure _ONG_display(*this._onglet)
   With *this
-    SetGadgetAttribute(\canvasId,#PB_Canvas_Image,ImageID(\imageId))
+    SetGadgetAttribute(\canvasId,#PB_Canvas_Image,ImageID(\imageId)) 
   EndWith
 EndProcedure
 
@@ -64,6 +64,7 @@ Procedure _ONG_event()
         ProcedureReturn 
       EndIf
     Next
+    _ONG_display(*this)
     SetGadgetAttribute(\canvasId,#PB_Canvas_Cursor,#PB_Cursor_Default)
   EndWith
 EndProcedure
@@ -166,8 +167,8 @@ DataSection
   Data.i @ONG_addPanel()
   E_onglet:
 EndDataSection
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 25
-; FirstLine = 10
-; Folding = 4Dm+
+; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
+; CursorPosition = 66
+; FirstLine = 43
+; Folding = -Dm+
 ; EnableXP

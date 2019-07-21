@@ -33,6 +33,8 @@ LoadImage(#IMG_PARA,"IMG/para.png")
 
 #MAIN_FORM = 0
 #CONTAINER = 0
+
+Global gCloseIco.ONGLET::Icon
 ; create onglet
 ; -> create linear gradient of color
 ;   -> non active color
@@ -55,6 +57,11 @@ EndProcedure
 
 Procedure evIcon(icon.ONGLET::Icon)
   Debug icon\getData()
+  If icon\getData() = 11
+    gCloseIco\setDisable(#False)
+    ProcedureReturn #True
+  EndIf
+  ProcedureReturn #False
 EndProcedure
 
 Define p.ONGLET::Panel = myOnglet\addPanel(ONGLET::newPanel("Project",#True))
@@ -70,6 +77,8 @@ Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_CLOSE))
 ;   add bind callback and set data
 i\setData(12)
 i\setCallback(@evIcon())
+i\setDisable(#True) ; try disable option
+gCloseIco = i ; for enable after
 Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_OPEN))
 ;   add bind callback and set data
 i\setData(13)
@@ -131,8 +140,8 @@ Repeat
   WaitWindowEvent()
 Until Event() = #PB_Event_CloseWindow
 
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 120
-; FirstLine = 97
+; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
+; CursorPosition = 60
+; FirstLine = 36
 ; Folding = -
 ; EnableXP

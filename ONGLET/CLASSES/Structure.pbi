@@ -38,6 +38,38 @@ Procedure ImageGrayout(image)
   StopDrawing()
 EndProcedure
 
+Procedure ImageBrigness(image)
+  Protected w, h, x, y, r, g, b, br,bb,bg, color,nivel = 40
+   w = ImageWidth(image)
+  h = ImageHeight(image)
+  StartDrawing(ImageOutput(image))
+  For x = 0 To w - 1
+    For y = 0 To h - 1
+      color = Point(x, y)
+      r    = Red(color)
+      g    = Green(color)
+      b    = Blue(color)
+      If r + nivel <=255
+        r = r + nivel
+      Else
+        r = 255
+      EndIf
+      If g + nivel <=255
+        g = g + nivel
+      Else
+        g = 255
+      EndIf
+      If b + nivel <=255
+        b = b + nivel
+      Else
+        b = 255
+      EndIf
+      Plot(x, y, RGB(r, g, b))
+    Next
+  Next
+  StopDrawing()
+EndProcedure
+ 
 
 Prototype _makeLinear(*this,x = 0,y = 0,w = 0,h = 0)
 Prototype _makePanel(*this,*parent,x,y = 0)
@@ -73,10 +105,8 @@ EndStructure
 Structure _icon Extends _content
   image.i
   imageGrey.i
-  hoveredColor.i
-  borderOn.i
-  borderColor.i
-  borderSize.i
+  imageBrig.i
+  hovered.i
   disable.b
 EndStructure
 Structure _panel
@@ -109,8 +139,8 @@ Structure _onglet
 EndStructure
 
 
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 70
-; FirstLine = 64
-; Folding = --
+; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
+; CursorPosition = 108
+; FirstLine = 89
+; Folding = ---
 ; EnableXP
