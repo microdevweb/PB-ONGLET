@@ -80,6 +80,10 @@ Procedure _ONG_event()
     
   EndWith
 EndProcedure
+
+Procedure _ONG_event_kill_thread()
+  KillThread(gThread)
+EndProcedure
 ;}
 ;-* PROTECTED METHODS
 Procedure _ONG_disableAllPanel(*this._onglet)
@@ -140,6 +144,7 @@ Procedure ONG_build(*this._onglet)
     If Not \idHelpForm
       \idHelpForm = OpenWindow(#PB_Any,0,0,200,200,"",#PB_Window_BorderLess|#PB_Window_Invisible|#PB_Window_NoActivate,WindowID(\idForm))
       \idHelpCanvas = CanvasGadget(#PB_Any,0,0,200,200)
+      BindEvent(#PB_Event_CloseWindow,@_ONG_event_kill_thread(),\idForm)
     EndIf
     _ONG_draw(*this)
     _ONG_display(*this)
@@ -209,7 +214,7 @@ DataSection
   IncludeBinary "IMG/help.png"
 EndDataSection
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 75
-; FirstLine = 16
-; Folding = xHYe-
+; CursorPosition = 146
+; FirstLine = 36
+; Folding = hPw9+
 ; EnableXP
