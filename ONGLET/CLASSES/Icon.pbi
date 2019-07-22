@@ -21,12 +21,14 @@ EndProcedure
 
 Procedure ICON_drawHovered(*this._icon,*onglet._onglet,mx,my)
   With *this
-    StartVectorDrawing(CanvasVectorOutput(*onglet\canvasId))
-    VectorSourceImage(*onglet\imageId)
-    FillVectorOutput()
-    MovePathCursor(\myPos\x,\myPos\y)
-    DrawVectorImage(ImageID(\imageBrig),255,\myPos\w,\myPos\h)
-    StopVectorDrawing()
+    If Not gParaShow\showed
+      StartVectorDrawing(CanvasVectorOutput(*onglet\canvasId))
+      VectorSourceImage(*onglet\imageId)
+      FillVectorOutput()
+      MovePathCursor(\myPos\x,\myPos\y)
+      DrawVectorImage(ImageID(\imageBrig),255,\myPos\w,\myPos\h)
+      StopVectorDrawing()
+    EndIf
     If Len(\helpText)
       Protected *par._show = AllocateStructure(_show)
       Protected id
@@ -35,6 +37,7 @@ Procedure ICON_drawHovered(*this._icon,*onglet._onglet,mx,my)
         gParaShow\x = mx
         gParaShow\y = my + 30
         gParaShow\on = #True
+        gParaShow\showed = #False
     EndIf
   EndWith
 EndProcedure
@@ -125,7 +128,7 @@ DataSection
   E_icon:
 EndDataSection
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 35
+; CursorPosition = 30
 ; FirstLine = 20
-; Folding = --z+
+; Folding = --n0
 ; EnableXP

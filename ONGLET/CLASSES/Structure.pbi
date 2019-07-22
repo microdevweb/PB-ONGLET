@@ -175,6 +175,7 @@ Structure _show
   x.i
   y.i
   idThread.i
+  showed.b
 EndStructure
 Global *gCurrentOnglet._onglet
 Global gParaShow._show
@@ -183,35 +184,40 @@ Procedure _showHelp(value)
     Repeat
       ; calculate text size
       If \on
-        StartVectorDrawing(CanvasVectorOutput(\onglet\idHelpCanvas))
-        VectorFont(FontID(\onglet\helpFont))
-        Protected wt = VectorTextWidth(\text)
-        Protected ht = VectorTextHeight(\text)
-        StopVectorDrawing()
-        ; calcultate size
-        Protected w = wt + \onglet\helpMargin * 3
-        Protected h = \onglet\helpIconSize + ht + \onglet\helpMargin * 2
-        Protected xf = WindowX(\onglet\idForm) + GadgetX(\onglet\canvasId) + \x
-        Protected yf = WindowY(\onglet\idForm) + GadgetY(\onglet\canvasId) + \y
-        ResizeWindow(\onglet\idHelpForm,xf,yf,w,h)
-        ResizeGadget(\onglet\idHelpCanvas,0,0,w,h)
-        StartVectorDrawing(CanvasVectorOutput(\onglet\idHelpCanvas))
-        VectorSourceColor($FF000000)
-        FillVectorOutput()
-        AddPathFullRoundBox(0,\onglet\helpIconDecalageV,w - \onglet\helpIconDecalageH,h - \onglet\helpIconDecalageV,12)
-        VectorSourceColor(\onglet\helpBackColor)
-        FillPath()
-        MovePathCursor(\onglet\helpMargin ,\onglet\helpMargin * 2 + \onglet\helpIconDecalageV)
-        VectorSourceColor(\onglet\helpFrontColor)
-        VectorFont(FontID(\onglet\helpFont))
-        DrawVectorText(\text)
-        MovePathCursor(w - \onglet\helpIconSize,0)
-        DrawVectorImage(ImageID(\onglet\helpIcon),255,\onglet\helpIconSize,\onglet\helpIconSize)
-        StopVectorDrawing()
-        SetWindowLong_(WindowID(\onglet\idHelpForm), #GWL_EXSTYLE, #WS_EX_LAYERED | #WS_EX_TOPMOST)
-        SetLayeredWindowAttributes_(WindowID(\onglet\idHelpForm),$FF000000,0,#LWA_COLORKEY)
-        HideWindow(\onglet\idHelpForm,#False)
-        SetActiveWindow(\onglet\idForm)
+        If Not \showed
+          StartVectorDrawing(CanvasVectorOutput(\onglet\idHelpCanvas))
+          VectorFont(FontID(\onglet\helpFont))
+          Protected wt = VectorTextWidth(\text)
+          Protected ht = VectorTextHeight(\text)
+          StopVectorDrawing()
+          ; calcultate size
+          Protected w = wt + \onglet\helpMargin * 3
+          Protected h = \onglet\helpIconSize + ht + \onglet\helpMargin * 2
+          Protected xf = WindowX(\onglet\idForm) + GadgetX(\onglet\canvasId) + \x
+          Protected yf = WindowY(\onglet\idForm) + GadgetY(\onglet\canvasId) + \y
+          ResizeWindow(\onglet\idHelpForm,xf,yf,w,h)
+          ResizeGadget(\onglet\idHelpCanvas,0,0,w,h)
+          StartVectorDrawing(CanvasVectorOutput(\onglet\idHelpCanvas))
+          VectorSourceColor($FF000000)
+          FillVectorOutput()
+          AddPathFullRoundBox(0,\onglet\helpIconDecalageV,w - \onglet\helpIconDecalageH,h - \onglet\helpIconDecalageV,12)
+          VectorSourceColor(\onglet\helpBackColor)
+          FillPath()
+          MovePathCursor(\onglet\helpMargin ,\onglet\helpMargin * 2 + \onglet\helpIconDecalageV)
+          VectorSourceColor(\onglet\helpFrontColor)
+          VectorFont(FontID(\onglet\helpFont))
+          DrawVectorText(\text)
+          MovePathCursor(w - \onglet\helpIconSize,0)
+          DrawVectorImage(ImageID(\onglet\helpIcon),255,\onglet\helpIconSize,\onglet\helpIconSize)
+          StopVectorDrawing()
+          SetWindowLong_(WindowID(\onglet\idHelpForm), #GWL_EXSTYLE, #WS_EX_LAYERED | #WS_EX_TOPMOST)
+          SetLayeredWindowAttributes_(WindowID(\onglet\idHelpForm),$FF000000,0,#LWA_COLORKEY)
+          HideWindow(\onglet\idHelpForm,#False)
+          SetActiveWindow(\onglet\idForm)
+          \showed = #True
+        Else
+          ResizeWindow(\onglet\idHelpForm,#PB_Ignore,#PB_Ignore,w,h)
+        EndIf
       Else
         HideWindow(\onglet\idHelpForm,#True)
       EndIf
@@ -225,7 +231,7 @@ Global gThread
 
 
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 215
-; FirstLine = 120
+; CursorPosition = 218
+; FirstLine = 106
 ; Folding = mj0-
 ; EnableXP
