@@ -41,6 +41,9 @@ DeclareModule ONGLET
     ; SETTERS
     setData(pData)
     setCallback(callback)
+    setHelpText(text.s)
+    ; PUBLIC
+    setShorcut(shortCut)
   EndInterface
   Interface Icon Extends __content
     ; GETTERS
@@ -67,8 +70,8 @@ Module ONGLET
   XIncludeFile "CLASSES/Panel.pbi"
   XIncludeFile "CLASSES/Onglet.pbi"
 EndModule
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 60
-; FirstLine = 39
-; Folding = 0-
+; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
+; CursorPosition = 44
+; FirstLine = 5
+; Folding = x-
 ; EnableXP

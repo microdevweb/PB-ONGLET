@@ -19,12 +19,23 @@ Procedure ICON_hoverMe(*this._icon,mx,my)
   EndWith
 EndProcedure
 
-Procedure ICON_drawHovered(*this._icon,*onglet._onglet)
+Procedure ICON_drawHovered(*this._icon,*onglet._onglet,mx,my)
   With *this
     StartVectorDrawing(CanvasVectorOutput(*onglet\canvasId))
+    VectorSourceImage(*onglet\imageId)
+    FillVectorOutput()
     MovePathCursor(\myPos\x,\myPos\y)
     DrawVectorImage(ImageID(\imageBrig),255,\myPos\w,\myPos\h)
     StopVectorDrawing()
+    If Len(\helpText)
+      Protected *par._show = AllocateStructure(_show)
+      Protected id
+        gParaShow\onglet = *onglet
+        gParaShow\text = \helpText
+        gParaShow\x = mx
+        gParaShow\y = my + 30
+        gParaShow\on = #True
+    EndIf
   EndWith
 EndProcedure
 ;}
@@ -41,6 +52,8 @@ Procedure ICON_make(*this._icon,*onglet._onglet,*parent._panel,x,y)
     \myPos\y = y
     \myPos\w = *onglet\iconSize
     \myPos\h = *onglet\iconSize
+    
+    \_make(*this,*onglet,*parent,x,y)
   EndWith
 EndProcedure
 
@@ -49,7 +62,7 @@ Procedure ICON_event(*this._icon,*parent._onglet,mx,my)
     Select EventType()
       Case #PB_EventType_MouseMove
         If ICON_hoverMe(*this,mx,my) And Not \disable
-          ICON_drawHovered(*this,*parent)
+          ICON_drawHovered(*this,*parent,mx,my)
           SetGadgetAttribute(*parent\canvasId,#PB_Canvas_Cursor,#PB_Cursor_Hand)
           ProcedureReturn #True
         EndIf 
@@ -112,7 +125,7 @@ DataSection
   E_icon:
 EndDataSection
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 59
-; FirstLine = 55
-; Folding = --J-
+; CursorPosition = 35
+; FirstLine = 20
+; Folding = --z+
 ; EnableXP

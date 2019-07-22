@@ -52,12 +52,17 @@ EndProcedure
 
 Procedure _ONG_event()
   Protected *this._onglet = GetGadgetData(EventGadget())
+  Static actif.b
+  *gCurrentOnglet = *gCurrentOnglet
   With *this
     Protected mx = GetGadgetAttribute(\canvasId,#PB_Canvas_MouseX)
     Protected my = GetGadgetAttribute(\canvasId,#PB_Canvas_MouseY)
     Select EventType()
       Case #PB_EventType_MouseEnter
         SetActiveGadget(\canvasId)
+        *gCurrentOnglet = *this
+      Case #PB_EventType_MouseLeave
+        
     EndSelect
     ForEach \myPanels()
       If \myPanels()\_event(\myPanels(),*this,mx,my)
@@ -66,6 +71,13 @@ Procedure _ONG_event()
     Next
     _ONG_display(*this)
     SetGadgetAttribute(\canvasId,#PB_Canvas_Cursor,#PB_Cursor_Default)
+    If EventType() = #PB_EventType_MouseLeave
+      If actif
+        gParaShow\on = #False
+      EndIf
+      actif = #True
+    EndIf
+    
   EndWith
 EndProcedure
 ;}
@@ -77,6 +89,8 @@ Procedure _ONG_disableAllPanel(*this._onglet)
     Next
   EndWith
 EndProcedure
+
+
 ;}
 ;-* GETTERS METHODS
 Procedure ONG_getLinear(*this._onglet)
@@ -112,6 +126,7 @@ EndProcedure
 
 Procedure ONG_build(*this._onglet)
   With *this
+    *gCurrentOnglet = *this
     If Not \canvasId 
       OpenGadgetList(\containerId)
       \canvasId = CanvasGadget(#PB_Any,0,0,GadgetWidth(\containerId),GadgetHeight(\containerId),#PB_Canvas_Container|#PB_Canvas_Keyboard)
@@ -120,8 +135,19 @@ Procedure ONG_build(*this._onglet)
       SetGadgetData(\canvasId,*this)
       BindGadgetEvent(\canvasId,@_ONG_event())
     EndIf
+    
+    \idForm = GetActiveWindow()
+    If Not \idHelpForm
+      \idHelpForm = OpenWindow(#PB_Any,0,0,200,200,"",#PB_Window_BorderLess|#PB_Window_Invisible|#PB_Window_NoActivate,WindowID(\idForm))
+      \idHelpCanvas = CanvasGadget(#PB_Any,0,0,200,200)
+    EndIf
     _ONG_draw(*this)
     _ONG_display(*this)
+    If Not IsThread(gThread)
+      gParaShow\onglet = *this
+      gParaShow\on = #False
+      gThread = CreateThread(@_showHelp(),0)
+    EndIf
   EndWith
 EndProcedure
 
@@ -149,6 +175,16 @@ Procedure newOnglet(containerId,backGroundColor,innerBackColor,innerFrontColor,p
     \_disableAllPanel = @_ONG_disableAllPanel()
     \panelFont = LoadFont(#PB_Any,"arial",11,#PB_Font_HighQuality|#PB_Font_Bold)
     \_drawInnerBox = @_ONG_drawInnerBox()
+    \lastEvent = 64000
+    \helpIcon = CatchImage(#PB_Any,?icon_help)
+    \helpIconSize = 36
+    \helpIconDecalageH = 10
+    \helpIconDecalageV = 22
+    \helpMaskColor = $FF000000
+    \helpBackColor = $FF424242
+    \helpFrontColor = $FFFFFFFF
+    \helpFont = LoadFont(#PB_Any,"arial",12,#PB_Font_HighQuality)
+    \helpMargin = 10
     ProcedureReturn *this
   EndWith
 EndProcedure
@@ -167,8 +203,13 @@ DataSection
   Data.i @ONG_addPanel()
   E_onglet:
 EndDataSection
+
+DataSection
+  icon_help:
+  IncludeBinary "IMG/help.png"
+EndDataSection
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 66
-; FirstLine = 43
-; Folding = -Dm+
+; CursorPosition = 75
+; FirstLine = 16
+; Folding = xHYe-
 ; EnableXP

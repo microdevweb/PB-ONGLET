@@ -73,6 +73,7 @@ Procedure _PAN_event(*this._panel,*parent._onglet,mx,my)
     EndIf
     Select EventType()
       Case #PB_EventType_MouseMove
+        gParaShow\on = #False
         If _PAN_hoverMe(*this,mx,my)
           If Not \actif
             SetGadgetAttribute(*parent\canvasId,#PB_Canvas_Cursor,#PB_Cursor_Hand)
@@ -178,8 +179,8 @@ DataSection
   Data.i @PAN_addContent() 
   E_panel:
 EndDataSection
-; IDE Options = PureBasic 5.70 LTS (Windows - x86)
-; CursorPosition = 69
-; FirstLine = 9
+; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
+; CursorPosition = 75
+; FirstLine = 12
 ; Folding = Q+Pnn
 ; EnableXP

@@ -73,20 +73,28 @@ Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_NEW))
 ;   add bind callback and set data
 i\setData(11)
 i\setCallback(@evIcon())
+;   add a shortcut
+i\setShorcut(#PB_Shortcut_Control|#PB_Shortcut_A)
+;   set help
+i\setHelpText("Create a new project (CTRL + A)")
 Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_CLOSE))
 ;   add bind callback and set data
 i\setData(12)
 i\setCallback(@evIcon())
 i\setDisable(#True) ; try disable option
+;   set help
+i\setHelpText("Close the project")
 gCloseIco = i ; for enable after
 Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_OPEN))
 ;   add bind callback and set data
 i\setData(13)
 i\setCallback(@evIcon())
+i\setHelpText("Open a existing project")
 Define i.ONGLET::Icon = p\addContent(ONGLET::newIcon(#IMG_SAVE))
 ;   add bind callback and set data
 i\setData(14)
 i\setCallback(@evIcon())
+i\setHelpText("Save the project")
 
 Define p.ONGLET::Panel = myOnglet\addPanel(ONGLET::newPanel("Tools"))
 ; add bind callback and set data
@@ -141,7 +149,7 @@ Repeat
 Until Event() = #PB_Event_CloseWindow
 
 ; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 60
-; FirstLine = 36
+; CursorPosition = 96
+; FirstLine = 75
 ; Folding = -
 ; EnableXP
