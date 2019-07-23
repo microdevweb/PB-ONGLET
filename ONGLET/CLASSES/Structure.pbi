@@ -210,7 +210,7 @@ Procedure _showHelp(value)
           MovePathCursor(w - \onglet\helpIconSize,0)
           DrawVectorImage(ImageID(\onglet\helpIcon),255,\onglet\helpIconSize,\onglet\helpIconSize)
           StopVectorDrawing()
-          SetWindowLong_(WindowID(\onglet\idHelpForm), #GWL_EXSTYLE, #WS_EX_LAYERED | #WS_EX_TOPMOST)
+          SetWindowLongPtr_(WindowID(\onglet\idHelpForm), #GWL_EXSTYLE, #WS_EX_LAYERED | #WS_EX_TOPMOST)
           SetLayeredWindowAttributes_(WindowID(\onglet\idHelpForm),$FF000000,0,#LWA_COLORKEY)
           HideWindow(\onglet\idHelpForm,#False)
           SetActiveWindow(\onglet\idForm)
@@ -230,8 +230,8 @@ Global gThread
 
 
 
-; IDE Options = PureBasic 5.71 beta 2 LTS (Windows - x64)
-; CursorPosition = 218
-; FirstLine = 106
+; IDE Options = PureBasic 5.70 LTS (Windows - x86)
+; CursorPosition = 212
+; FirstLine = 112
 ; Folding = mj0-
 ; EnableXP
